@@ -1,0 +1,8 @@
+extraargs=rootfstype=ext4 \
+sunxi_ve_mem_reserve=190 \
+sunxi_g2d_mem_reserve=16 \
+sunxi_fb_mem_reserve=32 \
+hdmi.audio=EDID:0 \
+disp.screen0_output_mode=1920x1080p50 \
+panic=10 \
+consoleblank=0

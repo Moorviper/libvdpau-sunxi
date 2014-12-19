@@ -1,0 +1,145 @@
+
+\usepackage[utf8]{inputenc} 															%     Ä ä Ö ö Ü ü und @ ermöglichen
+\usepackage[T1]{fontenc}
+\newcommand{\changefont}[3]{
+\fontfamily{#1} \fontseries{#2} \fontshape{#3} \selectfont}
+\usepackage{amsmath}
+
+
+
+\usepackage{fullpage}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+%--------------------------------------------------
+\setlength{\parindent}{0pt}  															
+\setlength{\parskip}{0pt}    															% Abstand zwischen den Absätzen
+\usepackage{eso-pic}																	% ----------------- USED TO INCLUDE PDF Background as example
+\usepackage{graphicx}  																	% ----------------- USED TO INCLUDE PDF Background as example
+\newcommand\BackgroundPic{																%====================================================================================
+\put(-3,0){
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering																						% Hintergrund auf Vollbind und includieren
+\includegraphics[width=\paperwidth,height=\paperheight]{pictures/bg.pdf}%
+%\includegraphics[width=\paperwidth,height=\paperheight]{filename.pdf}%
+%\includegraphics[width=\paperwidth,height=\paperheight]{filename.png}%
+\vfill
+}}}
+																								%==============================================================================
+% ---------------------------------- packages ----------------------------------
+\usepackage{ccaption}
+\usepackage{ulem}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage{pgfplots} 
+\pgfplotsset{ 
+  compat=newest
+  }
+
+%dashlines
+\usepackage{array,arydshln}
+\setlength\dashlinedash{0.2pt}
+\setlength\dashlinegap{1.5pt}
+\setlength\arrayrulewidth{0.3pt}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\usepackage{soul}
+
+\oddsidemargin-10mm
+%\usepackage{empheq}
+%\usepackage[ngerman]{babel} 																	% deutsche Babel
+\usepackage[english]{babel}     
+\usepackage{pxfonts,txfonts,upgreek,} 															% einige mathe symbole plus schöne schrift
+\usepackage{amssymb}
+\usepackage{MnSymbol}
+
+\renewcommand*{\familydefault}{\sfdefault}
+
+\usepackage[all]{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{xcolor}
+\usepackage{framed}
+
+% --------------          Eingekreiste zeichen ----------
+\newcommand*\kreis[1]{\unitlength1ex\begin{picture}(2.5,2.5)%
+\put(0.75,0.75){\circle{3}}\put(0.7,0.7){\makebox(0,0){#1}}\end{picture}}
+
+% ---------------------------------- definition of color
+\definecolor{lightgray}{rgb}{0.93,0.95,1.0}
+\definecolor{darkgreen}{RGB}{82,130,179}
+\definecolor{monogreen}{RGB}{166,226,46}
+\definecolor{monoblack}{RGB}{39,40,34}
+\definecolor{monoorange}{RGB}{253,151,31}
+\definecolor{monoblue}{RGB}{102,217,239}
+\definecolor{monored}{RGB}{249,38,114}
+
+
+
+
+% ---------------------------------- definition of logo's
+\DeclareRobustCommand{\shiftkey}{\raisebox{-.04em}{\includegraphics[height=.83em]{pictures/shift}}}
+\DeclareRobustCommand{\capslockkey}{\raisebox{-0.02em}{\includegraphics[height=.88em]{pictures/capslock}}}
+\DeclareRobustCommand{\ejectkey}{\raisebox{0.01em}{\includegraphics[height=.7em]{pictures/eject}}}
+\DeclareRobustCommand{\pencilkey}{\raisebox{-0.01em}{\includegraphics[height=.8em]{pictures/pencil}}}
+\DeclareRobustCommand{\returnkey}{\raisebox{-0.06em}{\includegraphics[height=.65em]{pictures/return}}}
+\DeclareRobustCommand{\revreturnkey}{\raisebox{-0.06em}{\includegraphics[height=.65em]{pictures/revreturn}}}
+\DeclareRobustCommand{\cubie}{\raisebox{-0.04em}{\includegraphics[height=.83em]{pictures/cubie}}}
+\DeclareRobustCommand{\cubiebig}{\raisebox{-0.04em}{\includegraphics[height=2.83em]{pictures/cubie}}}
+
+
+% -----------   a infobox
+\newcommand{\infobox}[3]{
+    \vspace{5mm}
+    \noindent
+    \vspace{-0.35mm}\hspace{-3px}
+    \colorbox{monoorange}{\bfseries\color{white}\parbox{\textwidth}{#1}}
+    \vspace{0mm}\hspace{0px}
+    \colorbox{monoblack}{\bfseries\color{lightgray}\parbox{\textwidth-6px}{#2}}
+    \vspace{55mm}\hspace{0px}
+    \colorbox{black}{\bfseries\color{white}\parbox{\textwidth-6px}{#3}}
+    \vspace{5mm}
+}
+
+
+
+% ==============   Code Boxes via minted
+
+\usepackage{minted}
+
+%\usemintedstyle{autumn} 
+
+% weitere Styles 
+\usemintedstyle{monokai}   % is modified
+%\usemintedstyle{manni} 
+%\usemintedstyle{rrt} 
+%\usemintedstyle{perldoc} 
+%\usemintedstyle{borland} 
+%\usemintedstyle{colorful} 
+%\usemintedstyle{default} 
+%\usemintedstyle{murphy} 
+%\usemintedstyle{vs} 
+%\usemintedstyle{trac} 
+%\usemintedstyle{tango} 
+%\usemintedstyle{fruity} 
+%\usemintedstyle{bw} 
+%\usemintedstyle{emacs} 
+%\usemintedstyle{vim} 
+%\usemintedstyle{pastie} 
+%\usemintedstyle{friendly} 
+%\usemintedstyle{native} 
+
+
+\renewcommand{\theFancyVerbLine}{\sffamily \textcolor{monoorange}{\scriptsize \oldstylenums{\arabic{FancyVerbLine}}}}
+
+\newtcolorbox[auto counter,number within=section, list inside=mypyg]{mintedbox}[2][]{%
+  title={%Quellcode  \thetcbcounter: 
+  #2}, % text titelzeile
+  list entry={\numberline{\thetcbcounter}#2},
+  coltext=white, bottomrule=1mm,boxsep=1mm, enhanced,colframe=monoorange,%black!50!white,%drop fuzzy shadow,
+  #1}
+
+
+% ================================================================================
+\usepackage[yyyymmdd,hhmmss]{datetime}
+
+\AddToShipoutPicture{\BackgroundPic}													% Hintergrund auf alle Seiten Anwenden%

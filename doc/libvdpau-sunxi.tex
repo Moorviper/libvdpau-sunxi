@@ -1,0 +1,393 @@
+\documentclass[11pt, a4paper,ngerman]{article}
+\usepackage{basic}
+
+\title{ Instructions to use \\ libvdpau-sunxi with VDR \\ on \\ \cubiebig \\ Cubieboard 1-3 \\ and other A10/A20}
+\author{ ... }
+\date{Compiled on \today\ at \currenttime}
+\begin{document}
+
+
+%============================================================= start   ==========================================================================
+\maketitle
+\newpage % <<------------------------------------------------------------------------------------- Newpage
+\tableofcontents 
+\newpage % <<------------------------------------------------------------------------------------- Newpage
+%  =================================================================================================================
+
+%\changefont{ppl}{b}{n}
+%\changefont{phv}{m}{n}
+%\changefont{cmss}{m}{n}
+%\changefont{phv}{m}{n}
+\changefont{pag}{m}{n}
+
+\section{Hardware}
+\subsection{Technical}
+\begin{Verbatim}[frame=lines,
+       framerule=0.2mm,framesep=3mm,
+       rulecolor=\color{monoorange},
+       fillcolor=\color{monogreen},
+       label=\cubiebig,labelposition=topline]
+  Name    :   Cubieboard 2
+  Size    :   10 cm x 6 cm
+  CPU     :   Allwinner A20 SoC (2 ARM-Cortex A7-Cores with 1 GHz)
+  GPU     :   Mali-400MP2 (OpenGL ES 2.0/1.1)
+  VPU     :   CedarX (max 2160p (Ultra HD))
+  RAM     :   512MB (Test) / 1GB (Produktion) DDR3
+  CONN    :   2x USB Host, 1x USB On-the-go, 1x CIR, 1x SATA
+  VID-OUT :   HDMI @ 1080p
+  AUD-OUT :   S/PDIF, Headphone, HDMI-Audio
+  AUD-IN  :   Mikrophone, Line-In
+  Storage :   4 GB NAND-Flash, 1x MicroSD
+  Network :   10/100-Ethernet
+  DB-Con. :   96 Pin incl I²C, SPI, LVDS
+\end{Verbatim}
+
+\section{Software}
+\subsection{Installation Driver and Library's}
+
+\subsubsection{xf86 Driver}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{xf86\ Driver\ installation}%
+ 
+
+     \inputminted[firstline=3,lastline=10, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/software.sh}%
+
+\end{mintedbox}%
+
+\subsubsection{FFmpeg (2.4.4)}
+
+Alternative libav should work. \\
+
+It's important to compile FFmpeg with "--enable-shared" flag \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{FFmpeg\ installation\ (\ 2.4.4\ )}%
+ 
+
+     \inputminted[firstline=14,lastline=20, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/software.sh}%
+
+\end{mintedbox}%
+
+\subsubsection{Libvdpau-sunxi}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{libvdpau-sunxi}%
+ 
+
+     \inputminted[firstline=24,lastline=28, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/software.sh}%
+
+\end{mintedbox}%
+
+\subsubsection{Editing uEnv}
+
+edit the uEnv.*  \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{uEnv}%
+ 
+
+     \inputminted[firstline=1,lastline=28, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/uEnv.txt}%
+
+\end{mintedbox}%
+\vspace{0.4cm}
+
+\color{monoorange}
+\underline{\textbf{sunxi\_ve\_mem\_reserve=190}} \\
+\color{black}
+is for the reservation of the memory used by the CedarX \\
+
+
+\color{monoorange}
+\underline{\textbf{hdmi.audio=EDID:0}} \\
+\color{black}
+for HDMI-Audio \\
+
+\color{monoorange}
+\underline{\textbf{disp.screen0\_output\_mode=1920x1080p50}} \\
+\color{black}
+1920x1080p50 is nessesary for use with SD- or HD-TV channels. \\
+
+
+\newpage % <<------------------------------------------------------------------------------------- Newpage
+\subsection{Sound}
+
+There are two way's to use the Sound-devices of the Allwinner A10/A20 SoC's\\
+
+ALSA and Pulse-Audio \\
+\subsubsection{ALSA}
+
+To use analog audio on the HDMI-Port you have to edit the: /etc/asound.conf !\\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{/etc/asound.conf}%
+ 
+
+     \inputminted[firstline=3,lastline=32, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{apacheconf}{includes/asound.conf}%
+
+\end{mintedbox}%
+\vspace{0.2cm}
+
+
+\subsubsection{Pulse-Audio}
+
+für HDMI: \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{HDMI\ Audio\ pulseaudio}%
+ 
+
+     \inputminted[firstline=3,lastline=3, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/pulseaudio.sh}%
+
+\end{mintedbox}%
+\vspace{0.2cm}
+
+Für Klinke: \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{ANALOG\ Audio\ pulseaudio}%
+ 
+
+     \inputminted[firstline=5,lastline=5, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/pulseaudio.sh}%
+
+\end{mintedbox}%
+\vspace{0.2cm}
+
+\newpage % <<------------------------------------------------------------------------------------- Newpage
+\subsection{Kernel Modules}
+
+Add modules to /etc/modules. \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{edit\ /etc/modules}%
+ 
+
+     \inputminted[firstline=5,lastline=5, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/modules.sh}%
+
+\end{mintedbox}%
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{add\ following:}%
+ 
+
+     \inputminted[firstline=8,lastline=25, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/modules.sh}%
+
+\end{mintedbox}%
+
+
+
+%
+% ---------------------------------------------------------- THE VIDEO DISK RECORDER ----------------------------------------------------------
+%
+\newpage % <<------------------------------------------------------------------------------------- Newpage
+
+\subsection{The Video Disk Recorder}
+
+\subsubsection{vdr-plugin-softhddevice}
+
+To use the OSD of the VDR you have to use the old bitmap surface of softhddevice. \\
+On a normal PC with a NVIDIA-card this surfaces are not used anymore. \\
+
+So you have to enable it again in the Makefile of the Plugin. \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{Enable\ Bitmap-Surface\ in\ SoftHD-device\ Makefile}%
+ 
+
+     \inputminted[firstline=32,lastline=32, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/software.sh}%
+
+\end{mintedbox}%
+\vspace{0.2cm}
+
+And search the line with: \underline{\#\#\# Make it standard} and add \underline{-fsigned-char} at the lines: \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{Add\ a\ fix\ in\ SoftHD-device\ Makefile}%
+ 
+
+     \inputminted[firstline=34,lastline=37, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/software.sh}%
+
+\end{mintedbox}%
+\vspace{0.2cm}
+
+\subsubsection{a basic VDR startscript}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{a\ basic\ VDR\ startscript}%
+ 
+
+     \inputminted[firstline=0,lastline=35, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/vdr-startscript.sh}%
+
+\end{mintedbox}%
+
+\newpage % <<------------------------------------------------------------------------------------- Newpage
+%==================================  OPTIONAL  =====================================================================================
+
+\subsection{Optional}
+
+\subsubsection{qvdpautest}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{qvdpautest installation}%
+ 
+
+     \inputminted[firstline=3,lastline=32, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/qvdpau.sh}%
+
+\end{mintedbox}%
+\vspace{0.2cm}
+
+\newpage % <<------------------------------------------------------------------------------------- Newpage
+\subsection{Notes}
+\infobox{Notes}{
+$\ $\\
+ \centering
+vdpau-sunxi is still in development. \\
+$\ $\\
+$\ $\\
+}{$\ $}
+
+
+
+%=========================================================================================================================
+%
+%-------------END
+\end{document}  
+
+\shiftkey \\
+\capslockkey \\
+\ejectkey \\
+\pencilkey \\
+\returnkey \\
+\revreturnkey \\
+\cubie \\
+\cubiebig \\
