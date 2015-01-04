@@ -1,7 +1,12 @@
 \documentclass[11pt, a4paper,ngerman]{article}
 \usepackage{basic}
 
-\title{ Instructions to use \\ libvdpau-sunxi with VDR \\ on \\ \cubiebig \\ Cubieboard 1-3 \\ and other A10/A20}
+\title{ 
+Instructions to use \\ libvdpau-sunxi with VDR \\ on \\ \cubiebig \\ Cubieboard 1-3 \\ and other A10/A20 \\ on \\ 
+\vspace{-5cm}
+\includegraphics[width=0.7\textwidth]{pictures/archlinux}
+\vspace{-5cm}
+}
 \author{ ... }
 \date{Compiled on \today\ at \currenttime}
 \begin{document}
@@ -42,6 +47,20 @@
   DB-Con. :   96 Pin incl I²C, SPI, LVDS
 \end{Verbatim}
 
+\subsection{Mod's}
+
+\color{red}
+\uuline{\textbf{(Keep in mind that you loose the warranty of your device)}}
+\color{black}
+
+\subsubsection{Adding a reset-switch}
+
+\vspace{0.4cm}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{pictures/placeholder.png}
+\end{center}
+
+\newpage
 \section{Software}
 \subsection{General}
 
@@ -53,6 +72,461 @@ There are two way's to fix it (on both you have to recompile the kernel):\\
 
 $\bullet$ change the value in the kernel. \\
 $\bullet$ disable CMA and use the kernelparameters.
+
+\subsection{Prepare the SD-Card for/with ArchLinux}
+\subsubsection{Open fdisk}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{open\ fdisk}%
+ 
+
+     \inputminted[firstline=8,lastline=8, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Create a partition}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{in\ fdisk}%
+ 
+
+     \inputminted[firstline=13,lastline=15, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Format and mount the partition}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{format\ and\ mount}%
+ 
+
+     \inputminted[firstline=21,lastline=22, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Get the Basic-Image}
+
+Get the basic-image and write it to the SD-Card. \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{download\ the\ image\ and\ install\ it}%
+ 
+
+     \inputminted[firstline=28,lastline=31, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{0.4cm}
+
+and copy the uboot! \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{copy\ uboot}%
+ 
+
+     \inputminted[firstline=37,lastline=38, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{0.4cm}
+
+then unmout the SD-Card and put it into the device. \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{unmount\ the\ SD-Card}%
+ 
+
+     \inputminted[firstline=44,lastline=44, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsection{Setup a linux-machine to use serial connection}
+
+\subsubsection{Connect the cables}
+
+\vspace{0.4cm}
+\begin{center}
+\includegraphics[width=0.7\textwidth]{pictures/placeholder.png}
+\end{center}
+
+\subsubsection{Install required software}
+
+On Linux-PC or Virtualbox (The writer uses Ubuntu kylin in Virtualbox)\\ 
+
+\textbf{Install GTK-Term} \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{install\ GTK-Term}%
+ 
+
+     \inputminted[firstline=49,lastline=49, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{0.4cm}
+
+open it and login on device \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{login\ on\ device}%
+ 
+
+     \inputminted[firstline=54,lastline=60, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.2cm}
+
+\subsection{Setup ArchLinux}
+\subsubsection{Setup Hostname}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{setup\ hostname}%
+ 
+
+     \inputminted[firstline=67,lastline=67, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{0.4cm}
+
+type in your prefered hostname and save it \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{save}%
+ 
+
+     \inputminted[firstline=71,lastline=71, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Setup Language}
+
+Choose your language (locales) \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{uncomment\ the\ language\ that\ you\ want\ to\ use}%
+ 
+
+     \inputminted[firstline=75,lastline=75, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{0.4cm}
+
+and apply it \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{apply}%
+ 
+
+     \inputminted[firstline=79,lastline=79, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Setup Network}
+
+Setting the ethernet to use dhcp \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{setup\ network}%
+ 
+
+     \inputminted[firstline=83,lastline=84, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Activating HDMI-Output}
+
+create a config-file for loading the modules \\
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{setup\ HDMI}%
+ 
+
+     \inputminted[firstline=88,lastline=88, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+
+\vspace{0.4cm}
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{$/$etc$/$modules-load.d$/$sunxi\_cedar\_mod.conf}%
+ 
+
+     \inputminted[firstline=92,lastline=103, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Make a Reboot}
+
+\vspace{0.4cm}
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{$ $}%
+ 
+
+     \inputminted[firstline=110,lastline=110, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Update Packages and System}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{update}%
+ 
+
+     \inputminted[firstline=114,lastline=114, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Install X-Server and Mate}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{install}%
+ 
+
+     \inputminted[firstline=118,lastline=118, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsubsection{Install some Packages}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{install}%
+ 
+
+     \inputminted[firstline=122,lastline=123, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+\subsection{Rebuild the Kernel}
+\subsubsection{Get the Kernel used by the Arch-Distrie}
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{get\ and\ rebuild}%
+ 
+
+     \inputminted[firstline=128,lastline=139, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/archlinux.sh}%
+
+\end{mintedbox}%
+\vspace{-0.4cm}
+
+
+
+
+
+
+
+
+
+\newpage
+
+\begin{comment} 
 
 \subsection{Installation Driver and Library's}
 
@@ -372,6 +846,8 @@ And search the line with: \underline{\#\#\# Make it standard} and add \underline
 ]{bash}{includes/vdr-startscript.sh}%
 
 \end{mintedbox}%
+
+\end{comment} 
 
 \newpage % <<------------------------------------------------------------------------------------- Newpage
 %==================================  OPTIONAL  =====================================================================================
