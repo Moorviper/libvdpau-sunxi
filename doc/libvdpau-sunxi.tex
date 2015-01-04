@@ -43,6 +43,16 @@
 \end{Verbatim}
 
 \section{Software}
+\subsection{General}
+
+To use CedarX with VDR and Softhd-device the standard 80MB Video-Memory is not enough!\\
+
+The Bad $\rightarrow$ it is hardcoded in the Kernel since 3.4.7x.\\
+
+There are two way's to fix it (on both you have to recompile the kernel):\\
+$\bullet$ change the value in the kernel. \\
+$\bullet$ disable CMA and use the kernelparameters.
+
 \subsection{Installation Driver and Library's}
 
 \subsubsection{xf86 Driver}
@@ -111,7 +121,29 @@ It's important to compile FFmpeg with "--enable-shared" flag \\
 
 \subsubsection{Editing uEnv}
 
+to use the Kernel-Parameter in uEnv the kernel should have build without CMA
+
+\begin{mintedbox}[breakable=true,
+%ribbonbox,
+ bottomrule=0.5mm,
+ width=\paperwidth-3cm,
+ boxsep=1mm, 
+ enhanced=true,
+ colframe = monoblack,
+ drop fuzzy shadow,
+ colback = black
+ ]{CMA disable}%
+ 
+
+     \inputminted[firstline=1,lastline=28, 
+     linenos=true, framesep=2mm, mathescape, numbersep=5pt,tabsize=4,%fontsize=\footnotesize, 
+]{bash}{includes/kernel.conf}%
+
+\end{mintedbox}%
+\vspace{0.4cm}
+
 edit the uEnv.*  \\
+
 
 \begin{mintedbox}[breakable=true,
 %ribbonbox,
@@ -181,7 +213,7 @@ To use analog audio on the HDMI-Port you have to edit the: /etc/asound.conf !\\
 
 \subsubsection{Pulse-Audio}
 
-für HDMI: \\
+for HDMI-audio: \\
 
 \begin{mintedbox}[breakable=true,
 %ribbonbox,
@@ -202,7 +234,7 @@ für HDMI: \\
 \end{mintedbox}%
 \vspace{0.2cm}
 
-Für Klinke: \\
+For analog-audio-jack: \\
 
 \begin{mintedbox}[breakable=true,
 %ribbonbox,
